@@ -198,7 +198,7 @@ class Pry
               char_to_match = Regexp.escape(ModOpHack::PAIR_MATCHES[tstack[0]] || char) 
               c += (tstack.shift + " ") until c =~ /^.#{char}.*#{char_to_match}/ 
            end
-           hacks = (self.config.hack.s.send(state).values.sort_by {|x| x.score(c) })
+           hacks = (Pry.config.hack.s.send(state).values.sort_by {|x| x.score(c) })
            if hacks.nil?
             stack.push c
             next
@@ -219,7 +219,7 @@ class Pry
 
   def retrieve_line(eval_string, *args)
     old_retrieve_line(eval_string, *args)
-    puts eval_string.sub!(/^.+?$/, Hackage.hack_line(eval_string))
+    eval_string.sub!(/^.+?$/, Hackage.hack_line(eval_string))
   end
 
 end
