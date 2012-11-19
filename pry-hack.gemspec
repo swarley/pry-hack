@@ -1,4 +1,4 @@
-$:.unshift File.expand_path("lib", __FILE__)
+$:.unshift File.expand_path("../lib", __FILE__)
 require "pry/hack"
 
 Gem::Specification.new do |g|
@@ -33,5 +33,5 @@ DESCRIPTION
   
   g.files = Dir.glob("{lib,examples}/**/*") + %w{README.md}
   
-  s.require_path = 'lib'
+  g.require_path = 'lib'
 end

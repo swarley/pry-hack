@@ -1,3 +1,4 @@
+require "pry"
 require "rubylexer"
 
 class Pry
@@ -57,6 +58,9 @@ class Pry
 
   # The main module containing the hack code
   module Hackage
+
+    VERSION = 0.1
+
     # Regular expressions kept constant for optimization and intended for use to match
     # patterns that may be used by a hack in the future.
     REGEX_REGEX = [%r/\A\/(.+?)\/(.+?)*\Z/, %r/%r(.)([^\1\\]|\\.)*\1/]
