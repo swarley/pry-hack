@@ -164,7 +164,7 @@ class Pry
       # or to enable
       # -*- pry-hack: enable -*-
       if str =~ /#\s*-\*-\s*pry-hack:\s*(disable|enable)\s*-\*-\s*/
-        self.config.hack.enabled = ($1 == "enable") ? true : false
+        ::Pry.config.hack.enabled = ($1 == "enable") ? true : false
       end
       return str unless ::Pry.config.hack.enabled      
       stack  = []
@@ -174,6 +174,7 @@ class Pry
       lexer = RubyLexer.new("(pry)", str)
       tstack = lexer.to_set.to_a[1..-2].select {|x| !(x.is_a? RubyLexer::FileAndLineToken) }
       tstack.map!(&:to_s)
+      tstack.delete("")
         while c = tstack.shift
           if state.nil?
             state= case c
@@ -193,7 +194,7 @@ class Pry
            stack.push c
            next 
          else
-           if state == :modop && tstack[0] =~ /[^A-Za-z0-9#]/
+           if state == :modop && tstack[0] =~ /[^A-Za-z0-9]/
               char = Regexp.escape(tstack[0])
               char_to_match = Regexp.escape(ModOpHack::PAIR_MATCHES[tstack[0]] || char) 
               c += (tstack.shift + " ") until c =~ /^.#{char}.*#{char_to_match}/ 
